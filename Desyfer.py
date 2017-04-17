@@ -126,25 +126,25 @@ def addUser():
 @app.route('/products')
 @login_required
 def products():
-    return render_template('products.html')
+    return render_template('products.html',title="Products",user=current_user,data=Products.query.all())
 
 
 @app.route('/users')
 @login_required
 def users():
-    return render_template('users.html')
+    return render_template('users.html',title="Users",user=current_user,data=Users.query.all())
 
 
 @app.route('/categories')
 @login_required
 def categories():
-    return render_template('categories.html')
+    return render_template('categories.html',title="Categories",user=current_user,data=Category.query.all())
 
 
 @app.route('/orders')
 @login_required
 def orders():
-    return render_template('orders.html')
+    return render_template('orders.html',title="Orders",user=current_user,data=Orders.query.all())
 
 
 @app.route('/logout')
