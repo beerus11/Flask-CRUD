@@ -145,28 +145,30 @@ def addUser():
 
 @app.route('/delUser', methods=['POST'])
 def delUser():
-    print request.form
+    print request.args
     if request.method == 'GET':
-        return render_template('register.html')
-    user = Users(request.form['username'], request.form['email'],
-                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
-    db.session.add(user)
+        return redirect(url_for('users'))
+    user = Users.query.filter_by(username=int(request.args['username'])).first()
+    db.session.delete(user)
     db.session.commit()
-    flash('User successfully registered')
-    return redirect(url_for('login'))
+    flash('User Deleted !')
+    return redirect(url_for('users'))
 
 
 @app.route('/editUser', methods=['POST'])
 def editUser():
     print request.form
     if request.method == 'GET':
-        return render_template('register.html')
-    user = Users(request.form['username'], request.form['email'],
-                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
-    db.session.add(user)
+        return redirect(url_for('users'))
+    user = Users.query.filter_by(username=int(request.args['username'])).first()
+    user.email = request.args['email']
+    user.password = request.args['password']
+    user.address = request.args['address']
+    user.phone = request.args['phone']
+    user.role = request.args['role']
     db.session.commit()
-    flash('User successfully registered')
-    return redirect(url_for('login'))
+    flash('User Edited')
+    return redirect(url_for('users'))
 
 
 @app.route('/addProduct', methods=['POST'])
