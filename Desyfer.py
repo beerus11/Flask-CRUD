@@ -215,13 +215,12 @@ def editProduct():
 def addCategory():
     print request.form
     if request.method == 'GET':
-        return render_template('register.html')
-    user = Users(request.form['username'], request.form['email'],
-                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
-    db.session.add(user)
+        return redirect(url_for('categories'))
+    category = Category(request.form['category_name'], request.form['parent_category'])
+    db.session.add(category)
     db.session.commit()
-    flash('User successfully registered')
-    return redirect(url_for('login'))
+    flash('Category Added !')
+    return redirect(url_for('categories'))
 
 
 @app.route('/delCategory', methods=['POST'])
