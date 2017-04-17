@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request
 from flask.ext.login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import func
 
 # Create app
 app = Flask(__name__)
@@ -75,8 +76,15 @@ class Orders(db.Model):
 @app.route('/home')
 @login_required
 def index():
-    print current_user
-    return render_template('index.html',title="Home",user=current_user)
+    table = {}
+    sum = 0
+    for order in Orders.query.all():
+        sum += order.price
+    table['total_order'] = Orders.query.count()
+    table['order_value'] = sum
+    table['total_users'] = Users.query.count()
+    table['total_products'] = Products.query.count()
+    return render_template('index.html', title="Home", user=current_user, data=table)
 
 
 @app.route('/login')
