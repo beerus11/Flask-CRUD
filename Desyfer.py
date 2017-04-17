@@ -228,27 +228,24 @@ def addCategory():
 def delCategory():
     print request.args
     if request.method == 'GET':
-        return redirect(url_for('products'))
-    product = Products.query.filter_by(id=int(request.args['id'])).first()
-    db.session.delete(product)
+        return redirect(url_for('categories'))
+    category = Category.query.filter_by(category_name=int(request.args['category_name'])).first()
+    db.session.delete(category)
     db.session.commit()
-    flash('Product Deleted !')
-    return redirect(url_for('products'))
+    flash('Category Deleted !')
+    return redirect(url_for('categories'))
 
 
 @app.route('/editCategory', methods=['POST'])
 def editCategory():
     print request.form
     if request.method == 'GET':
-        return redirect(url_for('products'))
-    product = Products.query.filter_by(id=int(request.args['id'])).first()
-    product.product_name = request.args['product_name']
-    product.category = request.args['category']
-    product.price = request.args['price']
-    product.status = request.args['status']
+        return redirect(url_for('categories'))
+    product = Products.query.filter_by(category_name=int(request.args['category_name'])).first()
+    product.parent_category = request.args['parent_category']
     db.session.commit()
-    flash('Product Edited')
-    return redirect(url_for('products'))
+    flash('Category Edited')
+    return redirect(url_for('categories'))
 
 
 @app.route('/addOrders', methods=['POST'])
