@@ -251,13 +251,13 @@ def editCategory():
 def addOrders():
     print request.form
     if request.method == 'GET':
-        return render_template('register.html')
+        return redirect(url_for('orders'))
     order = Orders(datetime.now(), request.form['customer'], request.form['product'],
-                 request.form['status'], request.form['address'], request.form['price'])
-    db.session.add(user)
+                   request.form['status'], request.form['address'], request.form['price'])
+    db.session.add(order)
     db.session.commit()
     flash('User successfully registered')
-    return redirect(url_for('login'))
+    return redirect(url_for('orders'))
 
 
 @app.route('/editOrders', methods=['POST'])
