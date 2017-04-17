@@ -226,28 +226,29 @@ def addCategory():
 
 @app.route('/delCategory', methods=['POST'])
 def delCategory():
-    print request.form
+    print request.args
     if request.method == 'GET':
-        return render_template('register.html')
-    user = Users(request.form['username'], request.form['email'],
-                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
-    db.session.add(user)
+        return redirect(url_for('products'))
+    product = Products.query.filter_by(id=int(request.args['id'])).first()
+    db.session.delete(product)
     db.session.commit()
-    flash('User successfully registered')
-    return redirect(url_for('login'))
+    flash('Product Deleted !')
+    return redirect(url_for('products'))
 
 
 @app.route('/editCategory', methods=['POST'])
 def editCategory():
     print request.form
     if request.method == 'GET':
-        return render_template('register.html')
-    user = Users(request.form['username'], request.form['email'],
-                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
-    db.session.add(user)
+        return redirect(url_for('products'))
+    product = Products.query.filter_by(id=int(request.args['id'])).first()
+    product.product_name = request.args['product_name']
+    product.category = request.args['category']
+    product.price = request.args['price']
+    product.status = request.args['status']
     db.session.commit()
-    flash('User successfully registered')
-    return redirect(url_for('login'))
+    flash('Product Edited')
+    return redirect(url_for('products'))
 
 
 @app.route('/addOrders', methods=['POST'])
@@ -267,26 +268,28 @@ def addOrders():
 def editOrders():
     print request.form
     if request.method == 'GET':
-        return render_template('register.html')
-    user = Users(request.form['username'], request.form['email'],
-                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
-    db.session.add(user)
+        return redirect(url_for('orders'))
+    order = Orders.query.filter_by(id=int(request.args['id'])).first()
+    order.customer = request.args['customer']
+    order.product = request.args['product']
+    order.status = request.args['status']
+    order.address = request.args['address']
+    order.price = request.args['price']
     db.session.commit()
-    flash('User successfully registered')
-    return redirect(url_for('login'))
+    flash('Product Edited')
+    return redirect(url_for('orders'))
 
 
 @app.route('/delOrders', methods=['POST'])
 def delOrders():
-    print request.form
+    print request.args
     if request.method == 'GET':
-        return render_template('register.html')
-    user = Users(request.form['username'], request.form['email'],
-                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
-    db.session.add(user)
+        return redirect(url_for('orders'))
+    order = Orders.query.filter_by(id=int(request.args['id'])).first()
+    db.session.delete(order)
     db.session.commit()
-    flash('User successfully registered')
-    return redirect(url_for('login'))
+    flash('Order Deleted !')
+    return redirect(url_for('orders'))
 
 
 @app.route('/products')
