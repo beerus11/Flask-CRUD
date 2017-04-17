@@ -3,22 +3,26 @@
     <table class="centered">
         <thead>
         <tr>
-            <th>Total Orders</th>
-            <th>Total Order Value</th>
-            <th>Total Users</th>
-            <th>Total Products</th>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>order</th>
+            <th>Status</th>
+            <th>Address</th>
+            <th>Price</th>
         </tr>
         </thead>
 
-          <tbody>
-        {% for product in data %}
+        <tbody>
+        {% for order in data %}
             <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.product_name}}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.price}}</td>
-                <td>{{ product.date_added }}</td>
-                <td>{{ product.status}}</td>
+                <td>{{ order.id }}</td>
+                <td>{{ order.date }}</td>
+                <td>{{ order.customer }}</td>
+                <td>{{ order.product }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.address }}</td>
+                <td>{{ order.price }}</td>
             </tr>
         {% endfor %}
 
