@@ -3,20 +3,34 @@
     <table class="centered">
         <thead>
         <tr>
-            <th>Total Orders</th>
-            <th>Total Order Value</th>
-            <th>Total Users</th>
-            <th>Total Products</th>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Role</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-            <td>$0.87</td>
-        </tr>
+        {% for user in data %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{% if user.role==1 %}
+                    Admin
+                {% else %}
+                    Customer
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+
         </tbody>
     </table>
     <br/><br/>
