@@ -118,25 +118,25 @@ def addUser():
 @app.route('/products')
 @login_required
 def products():
-    return 'Hello World!'
+    return render_template('products.html')
 
 
 @app.route('/users')
 @login_required
 def users():
-    return 'Hello World!'
+    return render_template('users.html')
 
 
 @app.route('/categories')
 @login_required
 def categories():
-    return 'Hello World!'
+    return render_template('categories.html')
 
 
 @app.route('/orders')
 @login_required
 def orders():
-    return 'Hello World!'
+    return render_template('orders.html')
 
 
 @app.route('/logout')
