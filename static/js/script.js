@@ -7,8 +7,8 @@ $(document).ready(function () {
     $("select").change(function () {
         console.log(this);
         var val = $('option:selected', this).attr('value');
-        console.log(val);
-        if (this.id = "action_product") {
+        console.log(this.id);
+        if (this.id == "action_product") {
             if (val == 0) {
                 var row = $(this).closest("tr");
                 var id = row.find("td#id").text().trim();
@@ -40,21 +40,30 @@ $(document).ready(function () {
                 });
             }
         }
-        else if (this.id = "action_category") {
+        else if (this.id == "action_user") {
+            if (val == 0) {
+
+            } else if (val == 1) {
+                console.log("Deleting User");
+                var username = $('option:selected', this).attr('data').trim();
+                $.ajax({
+                    type: "POST",
+                    url: "delUser",
+                    data: {username: username},
+                    success: function (result) {
+                        location.reload();
+                    }
+                });
+            }
+        }
+        else if (this.id == "action_category") {
             if (val == 0) {
 
             } else if (val == 1) {
 
             }
         }
-        else if (this.id = "action_users") {
-            if (val == 0) {
-
-            } else if (val == 1) {
-
-            }
-        }
-        else if (this.id = "action_orders") {
+        else if (this.id == "action_orders") {
             if (val == 0) {
 
             } else if (val == 1) {
@@ -98,8 +107,8 @@ $(document).ready(function () {
 
     $("#edit_product").click(function () {
         var json = convertFormToJSON("#editproductForm");
-        json["id"]=$("#edit_product_id").val();
-        json["status"]=$("#edit_p_status").val();
+        json["id"] = $("#edit_product_id").val();
+        json["status"] = $("#edit_p_status").val();
         console.log(json);
         $.ajax({
             type: "POST",

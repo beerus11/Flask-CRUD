@@ -151,10 +151,11 @@ def addUser():
 
 @app.route('/delUser', methods=['POST'])
 def delUser():
+    print request.form
     print request.args
     if request.method == 'GET':
         return redirect(url_for('users'))
-    user = Users.query.filter_by(username=int(request.args['username'])).first()
+    user = Users.query.filter_by(username=request.form['username']).first()
     db.session.delete(user)
     db.session.commit()
     flash('User Deleted !')
