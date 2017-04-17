@@ -16,6 +16,12 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
+##Constants
+product_status_arr = ['Published', 'Not Published', 'Removed', 'Out of Stock']
+order_status_arr = ['Pending', 'Approved', 'Received', 'Cancelled']
+parent_category_arr = ['Groceries', 'Fashion', 'Electronics']
+role_arr = ['Admin', 'Customer']
+
 
 # Models
 class Users(db.Model):
@@ -173,11 +179,11 @@ def editUser():
 
 @app.route('/addProduct', methods=['POST'])
 def addProduct():
-    print request.args
+    print request.form
     if request.method == 'GET':
         redirect(url_for('products'))
-    product = Products(request.args['product_name'], request.args['category'],
-                       request.args['price'], datetime.now(), request.args['status'])
+    product = Products(request.form['product_name'], request.form['category'],
+                       request.form['price'], datetime.now(), product_status_arr[int(request.form['status'])])
     db.session.add(product)
     db.session.commit()
     flash('Product Added Successfully!')
@@ -186,10 +192,10 @@ def addProduct():
 
 @app.route('/delProduct', methods=['POST'])
 def delProduct():
-    print request.args
+    print request.form
     if request.method == 'GET':
         return redirect(url_for('products'))
-    product = Products.query.filter_by(id=int(request.args['id'])).first()
+    product = Products.query.filter_by(id=int(request.form['id'])).first()
     db.session.delete(product)
     db.session.commit()
     flash('Product Deleted !')
@@ -201,11 +207,12 @@ def editProduct():
     print request.form
     if request.method == 'GET':
         return redirect(url_for('products'))
-    product = Products.query.filter_by(id=int(request.args['id'])).first()
-    product.product_name = request.args['product_name']
-    product.category = request.args['category']
-    product.price = request.args['price']
-    product.status = request.args['status']
+    product = Products.query.filter_by(id=int(request.form['id'])).first()
+    print product
+    product.product_name = request.form['product_name']
+    product.category = request.form['category']
+    product.price = request.form['price']
+    product.status = product_status_arr[int(request.form['status'])]
     db.session.commit()
     flash('Product Edited')
     return redirect(url_for('products'))
@@ -291,7 +298,8 @@ def delOrders():
 @app.route('/products')
 @login_required
 def products():
-    return render_template('products.html', title="Products", user=current_user, data=Products.query.all())
+    return render_template('products.html', title="Products", user=current_user, data=Products.query.all(),
+                           categories=Category.query.all())
 
 
 @app.route('/users')
