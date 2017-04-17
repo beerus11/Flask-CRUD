@@ -10,6 +10,7 @@
             <th>Address</th>
             <th>Phone</th>
             <th>Role</th>
+             <th>Action</th>
         </tr>
         </thead>
 
@@ -28,10 +29,19 @@
                     Customer
                 {% endif %}
                 </td>
+                <td style="width: 120px;!important;"><select name="action">
+                    <option value="1">Edit</option>
+                    <option value="2">Delete</option>
+                </select>
+                </td>
             </tr>
         {% endfor %}
 
         </tbody>
     </table>
     <br/><br/>
+        <a id="add_user" class="btn-floating btn-large waves-effect waves-light red right" style="margin-top: -20px;"><i
+            class="material-icons">
+        add</i></a>
+
 {% endblock %}
