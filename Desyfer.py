@@ -4,6 +4,7 @@ from flask import request
 from flask.ext.login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
+from datetime import datetime
 
 # Create app
 app = Flask(__name__)
@@ -55,11 +56,22 @@ class Products(db.Model):
     date_added = db.Column(db.DateTime)
     status = db.Column(db.String(20))
 
+    def __init__(self, product_name, category, price, date_added, status):
+        self.product_name = product_name
+        self.category = category
+        self.price = price
+        self.date_added = date_added
+        self.status = status
+
 
 class Category(db.Model):
     id = db.Column(db.Integer, index=True, primary_key=True, autoincrement=True)
     category_name = db.Column(db.String(64))
     parent_category = db.Column(db.String(64))
+
+    def __init__(self, category_name, parent_category):
+        self.category_name = category_name
+        self.parent_category = parent_category
 
 
 class Orders(db.Model):
@@ -70,6 +82,14 @@ class Orders(db.Model):
     status = db.Column(db.String(20))
     address = db.Column(db.String(250))
     price = db.Column(db.Integer)
+
+    def __init__(self, date, customer, product, status, address, price):
+        self.date = date
+        self.customer = customer
+        self.product = product
+        self.status = status
+        self.address = address
+        self.price = price
 
 
 @app.route('/')
@@ -123,28 +143,172 @@ def addUser():
     return redirect(url_for('login'))
 
 
+@app.route('/delUser', methods=['POST'])
+def delUser():
+    print request.form
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = Users(request.form['username'], request.form['email'],
+                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+
+
+@app.route('/editUser', methods=['POST'])
+def editUser():
+    print request.form
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = Users(request.form['username'], request.form['email'],
+                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+
+
+@app.route('/addProduct', methods=['POST'])
+def addProduct():
+    print request.args
+    if request.method == 'GET':
+        redirect(url_for('products'))
+    product = Products(request.args['product_name'], request.args['category'],
+                       request.args['price'], datetime.now(), request.args['status'])
+    db.session.add(product)
+    db.session.commit()
+    flash('Product Added Successfully!')
+    return redirect(url_for('products'))
+
+
+@app.route('/delProduct', methods=['POST'])
+def delProduct():
+    print request.args
+    if request.method == 'GET':
+        return redirect(url_for('products'))
+    product = Products.query.filter_by(id=int(request.args['id'])).first()
+    db.session.delete(product)
+    db.session.commit()
+    flash('Product Deleted !')
+    return redirect(url_for('products'))
+
+
+@app.route('/editProduct', methods=['POST'])
+def editProduct():
+    print request.form
+    if request.method == 'GET':
+        return redirect(url_for('products'))
+    product = Products.query.filter_by(id=int(request.args['id'])).first()
+    product.product_name = request.args['product_name']
+    product.category = request.args['category']
+    product.price = request.args['price']
+    product.status = request.args['status']
+    db.session.commit()
+    flash('Product Edited')
+    return redirect(url_for('products'))
+
+
+@app.route('/addCategory', methods=['POST'])
+def addCategory():
+    print request.form
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = Users(request.form['username'], request.form['email'],
+                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+
+
+@app.route('/delCategory', methods=['POST'])
+def delCategory():
+    print request.form
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = Users(request.form['username'], request.form['email'],
+                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+
+
+@app.route('/editCategory', methods=['POST'])
+def editCategory():
+    print request.form
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = Users(request.form['username'], request.form['email'],
+                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+
+
+@app.route('/addOrders', methods=['POST'])
+def addOrders():
+    print request.form
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = Users(request.form['username'], request.form['email'],
+                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+
+
+@app.route('/editOrders', methods=['POST'])
+def editOrders():
+    print request.form
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = Users(request.form['username'], request.form['email'],
+                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+
+
+@app.route('/delOrders', methods=['POST'])
+def delOrders():
+    print request.form
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = Users(request.form['username'], request.form['email'],
+                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+
+
 @app.route('/products')
 @login_required
 def products():
-    return render_template('products.html',title="Products",user=current_user,data=Products.query.all())
+    return render_template('products.html', title="Products", user=current_user, data=Products.query.all())
 
 
 @app.route('/users')
 @login_required
 def users():
-    return render_template('users.html',title="Users",user=current_user,data=Users.query.all())
+    return render_template('users.html', title="Users", user=current_user, data=Users.query.all())
 
 
 @app.route('/categories')
 @login_required
 def categories():
-    return render_template('categories.html',title="Categories",user=current_user,data=Category.query.all())
+    return render_template('categories.html', title="Categories", user=current_user, data=Category.query.all())
 
 
 @app.route('/orders')
 @login_required
 def orders():
-    return render_template('orders.html',title="Orders",user=current_user,data=Orders.query.all())
+    return render_template('orders.html', title="Orders", user=current_user, data=Orders.query.all())
 
 
 @app.route('/logout')
