@@ -252,8 +252,8 @@ def addOrders():
     print request.form
     if request.method == 'GET':
         return render_template('register.html')
-    user = Users(request.form['username'], request.form['email'],
-                 request.form['password'], request.form['address'], request.form['phone'], request.form['role'])
+    order = Orders(datetime.now(), request.form['customer'], request.form['product'],
+                 request.form['status'], request.form['address'], request.form['price'])
     db.session.add(user)
     db.session.commit()
     flash('User successfully registered')
