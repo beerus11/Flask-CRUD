@@ -204,21 +204,19 @@ $(document).ready(function () {
 
     $("#edit_category").click(function () {
         var json = convertFormToJSON("#editcategoryForm");
-        json["status"] = $("#edit_status").val();
-        json["id"] = $("#edit_id").val();
-
+        json["parent_category"] = $("#edit_p_category").val();
+        json["category_name"] = $("#edit_category_name").val();
         console.log(json);
-        /*
-         $.ajax({
-         type: "POST",
-         url: "editCategory",
-         data: json,
-         success: function (result) {
-         location.reload();
-         $('#modal2').modal('close');
-         }
-         });
-         */
+        $.ajax({
+            type: "POST",
+            url: "editCategory",
+            data: json,
+            success: function (result) {
+                location.reload();
+                $('#modal2').modal('close');
+            }
+        });
+
 
     });
 
