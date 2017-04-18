@@ -17,8 +17,8 @@
                 <td id="category_name">{{ categoty.category_name }}</td>
                 <td id="parent_category">{{ categoty.parent_category }}</td>
                 <td style="width: 120px;!important;"><select id="action_category">
-                    <option value="0" data="{{categoty.category_name }}">Edit</option>
-                    <option value="1" data="{{categoty.category_name  }}">Delete</option>
+                    <option value="0" data="{{ categoty.category_name }}">Edit</option>
+                    <option value="1" data="{{ categoty.category_name }}">Delete</option>
                 </select>
                 </td>
             </tr>
@@ -27,7 +27,7 @@
         </tbody>
     </table>
     <br/><br/>
-    <a  class="modal-trigger btn-floating btn-large waves-effect waves-light red right"
+    <a class="modal-trigger btn-floating btn-large waves-effect waves-light red right"
        style="margin-top: -20px;" href="#modal1"><i
             class="material-icons">
         add</i></a>
@@ -65,44 +65,25 @@
                 <h5>Edit Category</h5>
                 <form id="editcategoryForm" class="col s12">
                     <div class="row">
-                        <div class="input-field col s6">
-                            <input id="edit_product_id" name="id" type="text" class="validate" disabled>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="edit_product_name" name="product_name" type="text" class="validate">
-                            <label for="icon_prefix">Product Name</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <select id="edit_category" name="category">
-                                {% for category in categories %}
-                                    <option value="{{ category.id }}">{{ category.category_name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label for="icon_prefix">Category</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <select id="edit_p_status" name="status">
-                                <option value="0">Published</option>
-                                <option value="1">Not Published</option>
-                                <option value="2">Removed</option>
-                                <option value="3">Out of Stock</option>
-                            </select>
-                            <label for="icon_telephone">Status</label>
+                        <div class="input-field col s12">
+                            <input id="edit_category_name" name="category_name" type="text" class="validate" disabled>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="edit_price" type="text" class="validate" name="price">
-                            <label for="icon_prefix">Price</label>
+                            <select id="edit_p_category" name="parent_category">
+                                <option value="0">Groceries</option>
+                                <option value="1">Fashion</option>
+                                <option value="2">Electronics</option>
+                            </select>
+                            <label for="icon_prefix">Parent Category</label>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" id="edit_category" class="modal-action modal-close waves-effect waves-green btn-flat ">Save</a>
+            <a href="#!" id="edit_category" class="modal-action modal-close waves-effect waves-green btn-flat ">edit</a>
         </div>
     </div>
 {% endblock %}

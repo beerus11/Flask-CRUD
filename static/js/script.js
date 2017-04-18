@@ -78,6 +78,12 @@ $(document).ready(function () {
         }
         else if (this.id == "action_category") {
             if (val == 0) {
+                var row = $(this).closest("tr");
+                var category_name = row.find("td#category_name").text().trim();
+                var parent_category = row.find("td#parent_category").text().trim();
+                $('#modal2').modal('open');
+                $("#edit_category_name").val(category_name);
+                $("#edit_parent_category").val(parent_category);
 
             } else if (val == 1) {
                 console.log("Deleting Category");
@@ -169,7 +175,7 @@ $(document).ready(function () {
 
     $("#edit_user").click(function () {
         var json = convertFormToJSON("#edituserForm");
-        json["username"] = $("#edit_username").val();
+
         console.log(json);
         $.ajax({
             type: "POST",
@@ -180,6 +186,42 @@ $(document).ready(function () {
                 $('#modal2').modal('close');
             }
         });
+
+    });
+
+    $("#edit_category").click(function () {
+        var json = convertFormToJSON("#editcategoryForm");
+        json["category_name"] = $("#edit_category_name").val();
+        json["parent_category"] = $("#edit_p_category").val();
+        console.log(json);
+        $.ajax({
+            type: "POST",
+            url: "editCategory",
+            data: json,
+            success: function (result) {
+                location.reload();
+                $('#modal2').modal('close');
+            }
+        });
+
+
+    });
+
+
+    $("#edit_order").click(function () {
+        var json = convertFormToJSON("#edituserForm");
+        console.log(json);
+        /*
+         $.ajax({
+         type: "POST",
+         url: "editOrder",
+         data: json,
+         success: function (result) {
+         location.reload();
+         $('#modal2').modal('close');
+         }
+         });
+         */
 
     });
 

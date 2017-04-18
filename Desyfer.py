@@ -248,8 +248,8 @@ def editCategory():
     print request.form
     if request.method == 'GET':
         return redirect(url_for('categories'))
-    product = Products.query.filter_by(category_name=int(request.form['category_name'])).first()
-    product.parent_category = request.form['parent_category']
+    category = Category.query.filter_by(category_name=request.form['category_name']).first()
+    category.parent_category = parent_category_arr[int(request.form['parent_category'])]
     db.session.commit()
     flash('Category Edited')
     return redirect(url_for('categories'))
