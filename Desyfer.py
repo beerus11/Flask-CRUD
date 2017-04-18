@@ -236,7 +236,7 @@ def delCategory():
     print request.form
     if request.method == 'GET':
         return redirect(url_for('categories'))
-    category = Category.query.filter_by(category_name=int(request.form['category_name'])).first()
+    category = Category.query.filter_by(category_name=request.form['category_name']).first()
     db.session.delete(category)
     db.session.commit()
     flash('Category Deleted !')
@@ -285,7 +285,7 @@ def editOrders():
     return redirect(url_for('orders'))
 
 
-@app.route('/delOrders', methods=['POST'])
+@app.route('/delOrder', methods=['POST'])
 def delOrders():
     print request.form
     if request.method == 'GET':

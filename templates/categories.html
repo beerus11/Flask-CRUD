@@ -16,9 +16,9 @@
                 <td id="id">{{ categoty.id }}</td>
                 <td id="category_name">{{ categoty.category_name }}</td>
                 <td id="parent_category">{{ categoty.parent_category }}</td>
-                <td style="width: 120px;!important;"><select name="action">
-                    <option value="1">Edit</option>
-                    <option value="2">Delete</option>
+                <td style="width: 120px;!important;"><select id="action_category">
+                    <option value="0" data="{{categoty.category_name }}">Edit</option>
+                    <option value="1" data="{{categoty.category_name  }}">Delete</option>
                 </select>
                 </td>
             </tr>

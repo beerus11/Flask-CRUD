@@ -24,9 +24,9 @@
                 <td id="status">{{ order.status }}</td>
                 <td id="address">{{ order.address }}</td>
                 <td id="price">{{ order.price }}</td>
-                <td style="width: 120px;!important;"><select name="action">
-                    <option value="1">Edit</option>
-                    <option value="2">Delete</option>
+                <td style="width: 120px;!important;"><select id="action_orders">
+                    <option value="0" data="{{order.id }}">Edit</option>
+                    <option value="1" data="{{order.id}}">Delete</option>
                 </select>
                 </td>
             </tr>

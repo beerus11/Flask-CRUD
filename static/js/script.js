@@ -80,14 +80,32 @@ $(document).ready(function () {
             if (val == 0) {
 
             } else if (val == 1) {
-
+                console.log("Deleting Category");
+                var category_name = $('option:selected', this).attr('data').trim();
+                $.ajax({
+                    type: "POST",
+                    url: "delCategory",
+                    data: {category_name: category_name},
+                    success: function (result) {
+                        location.reload();
+                    }
+                });
             }
         }
         else if (this.id == "action_orders") {
             if (val == 0) {
 
             } else if (val == 1) {
-
+                console.log("Deleting Order");
+                var id = $('option:selected', this).attr('data').trim();
+                $.ajax({
+                    type: "POST",
+                    url: "delOrder",
+                    data: {id: id},
+                    success: function (result) {
+                        location.reload();
+                    }
+                });
             }
         }
     });
