@@ -269,7 +269,7 @@ def addOrders():
     return redirect(url_for('orders'))
 
 
-@app.route('/editOrders', methods=['POST'])
+@app.route('/editOrder', methods=['POST'])
 def editOrders():
     print request.form
     if request.method == 'GET':
@@ -277,7 +277,7 @@ def editOrders():
     order = Orders.query.filter_by(id=int(request.form['id'])).first()
     order.customer = request.form['customer']
     order.product = request.form['product']
-    order.status = request.form['status']
+    order.status = order_status_arr[int(request.form['status'])]
     order.address = request.form['address']
     order.price = request.form['price']
     db.session.commit()

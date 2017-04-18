@@ -100,7 +100,20 @@ $(document).ready(function () {
         }
         else if (this.id == "action_orders") {
             if (val == 0) {
-
+                var row = $(this).closest("tr");
+                var id = row.find("td#id").text().trim();
+                var customer = row.find("td#customer").text().trim();
+                var product = row.find("td#product").text().trim();
+                var status = row.find("td#status").text().trim();
+                var address = row.find("td#address").text().trim();
+                var price = row.find("td#price").text().trim();
+                $('#modal2').modal('open');
+                $("#edit_id").val(id);
+                $("#edit_customer").val(customer);
+                $("#edit_product").val(product);
+                $("#edit_status").val(status);
+                $("#edit_address").val(address);
+                $("#edit_price").val(price);
             } else if (val == 1) {
                 console.log("Deleting Order");
                 var id = $('option:selected', this).attr('data').trim();
@@ -191,30 +204,14 @@ $(document).ready(function () {
 
     $("#edit_category").click(function () {
         var json = convertFormToJSON("#editcategoryForm");
-        json["category_name"] = $("#edit_category_name").val();
-        json["parent_category"] = $("#edit_p_category").val();
-        console.log(json);
-        $.ajax({
-            type: "POST",
-            url: "editCategory",
-            data: json,
-            success: function (result) {
-                location.reload();
-                $('#modal2').modal('close');
-            }
-        });
+        json["status"] = $("#edit_status").val();
+        json["id"] = $("#edit_id").val();
 
-
-    });
-
-
-    $("#edit_order").click(function () {
-        var json = convertFormToJSON("#edituserForm");
         console.log(json);
         /*
          $.ajax({
          type: "POST",
-         url: "editOrder",
+         url: "editCategory",
          data: json,
          success: function (result) {
          location.reload();
@@ -222,6 +219,26 @@ $(document).ready(function () {
          }
          });
          */
+
+    });
+
+
+    $("#edit_order").click(function () {
+        var json = convertFormToJSON("#editorderForm");
+        json["status"] = $("#my_edit_status").val();
+        json["id"] = $("#edit_id").val();
+
+        console.log(json);
+        $.ajax({
+            type: "POST",
+            url: "editOrder",
+            data: json,
+            success: function (result) {
+                location.reload();
+                $('#modal2').modal('close');
+            }
+        });
+
 
     });
 
