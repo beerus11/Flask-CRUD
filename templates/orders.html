@@ -35,7 +35,7 @@
         </tbody>
     </table>
     <br/><br/>
-    <a id="add_order" class="modal-trigger btn-floating btn-large waves-effect waves-light red right"
+    <a class="modal-trigger btn-floating btn-large waves-effect waves-light red right"
        style="margin-top: -20px;" href="#modal1"><i
             class="material-icons">
         add</i></a>
@@ -43,34 +43,42 @@
         <div class="modal-content">
             <div class="row">
                 <h5>Add Order</h5>
-                <form id="orderForm" class="col s12">
+                <form id="myorderForm" class="col s12">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="icon_prefix" name="product_name" type="text" class="validate">
-                            <label for="icon_prefix">Product Name</label>
+                            <select name="customer">
+                                {% for item in customers %}
+                                    <option value="{{ item.id }}">{{ item.username }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="icon_prefix">Customer Name</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <select name="category">
-                                {% for category in categories %}
-                                    <option value="{{ category.id }}">{{ category.category_name }}</option>
+                            <select name="product">
+                                {% for product in products %}
+                                    <option value="{{ product.id }}">{{ product.product_name }}</option>
                                 {% endfor %}
                             </select>
-                            <label for="icon_prefix">Category</label>
+                            <label for="icon_prefix">Product</label>
                         </div>
                         <div class="input-field col s6">
                             <select name="status">
-                                <option value="0">Published</option>
-                                <option value="1">Not Published</option>
-                                <option value="2">Removed</option>
-                                <option value="3">Out of Stock</option>
+                                <option value="0">Pending</option>
+                                <option value="1">Approved</option>
+                                <option value="2">Received</option>
+                                <option value="3">Cancelled</option>
                             </select>
                             <label for="icon_telephone">Status</label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s6">
+                            <input id="icon_prefix" type="text" class="validate" name="address">
+                            <label for="icon_prefix">Address</label>
+                        </div>
+                        <div class="input-field col s6">
                             <input id="icon_prefix" type="text" class="validate" name="price">
                             <label for="icon_prefix">Price</label>
                         </div>
@@ -98,11 +106,6 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <select id="edit_category" name="category">
-                                {% for category in categories %}
-                                    <option value="{{ category.id }}">{{ category.category_name }}</option>
-                                {% endfor %}
-                            </select>
                             <label for="icon_prefix">Category</label>
                         </div>
                         <div class="input-field col s6">

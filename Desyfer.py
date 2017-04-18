@@ -224,7 +224,7 @@ def addCategory():
     print request.form
     if request.method == 'GET':
         return redirect(url_for('categories'))
-    category = Category(request.form['category_name'],parent_category_arr[int(request.form['parent_category'])])
+    category = Category(request.form['category_name'], parent_category_arr[int(request.form['parent_category'])])
     db.session.add(category)
     db.session.commit()
     flash('Category Added !')
@@ -255,13 +255,14 @@ def editCategory():
     return redirect(url_for('categories'))
 
 
-@app.route('/addOrders', methods=['POST'])
+@app.route('/addOrder', methods=['POST'])
 def addOrders():
+    print request.args
     print request.form
     if request.method == 'GET':
         return redirect(url_for('orders'))
     order = Orders(datetime.now(), request.form['customer'], request.form['product'],
-                   request.form['status'], request.form['address'], request.form['price'])
+                   order_status_arr[int(request.form['status'])], request.form['address'], request.form['price'])
     db.session.add(order)
     db.session.commit()
     flash('User successfully registered')
@@ -318,7 +319,10 @@ def categories():
 @app.route('/orders')
 @login_required
 def orders():
-    return render_template('orders.html', title="Orders", user=current_user, data=Orders.query.all())
+    customers = Users.query.filter_by(role=2)
+    products = Products.query.all()
+    return render_template('orders.html', title="Orders", user=current_user, data=Orders.query.all(),
+                           customers=customers, products=products)
 
 
 @app.route('/logout')

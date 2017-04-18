@@ -119,7 +119,7 @@ $(document).ready(function () {
     })
 
     $("#add_order").click(function () {
-        var json = convertFormToJSON("#productOrder");
+        var json = convertFormToJSON("#myorderForm");
         console.log(json);
         $.ajax({
             type: "POST",
