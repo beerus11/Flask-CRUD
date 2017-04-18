@@ -224,7 +224,7 @@ def addCategory():
     print request.form
     if request.method == 'GET':
         return redirect(url_for('categories'))
-    category = Category(request.form['category_name'], request.form['parent_category'])
+    category = Category(request.form['category_name'],parent_category_arr[int(request.form['parent_category'])])
     db.session.add(category)
     db.session.commit()
     flash('Category Added !')

@@ -6,16 +6,16 @@
             <th>ID</th>
             <th>Category Name</th>
             <th>Parent Category</th>
-             <th>Action</th>
+            <th>Action</th>
         </tr>
         </thead>
 
-          <tbody>
+        <tbody>
         {% for categoty in data %}
             <tr>
-                <td>{{ categoty.id }}</td>
-                <td>{{ categoty.category_name}}</td>
-                <td>{{ categoty.parent_category }}</td>
+                <td id="id">{{ categoty.id }}</td>
+                <td id="category_name">{{ categoty.category_name }}</td>
+                <td id="parent_category">{{ categoty.parent_category }}</td>
                 <td style="width: 120px;!important;"><select name="action">
                     <option value="1">Edit</option>
                     <option value="2">Delete</option>
@@ -27,8 +27,82 @@
         </tbody>
     </table>
     <br/><br/>
-        <a id="add_category" class="btn-floating btn-large waves-effect waves-light red right" style="margin-top: -20px;"><i
+    <a  class="modal-trigger btn-floating btn-large waves-effect waves-light red right"
+       style="margin-top: -20px;" href="#modal1"><i
             class="material-icons">
         add</i></a>
-
+    <div id="modal1" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <div class="row">
+                <h5>Add Category</h5>
+                <form id="categoryForm" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="icon_prefix" name="category_name" type="text" class="validate">
+                            <label for="icon_prefix">Category Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select name="parent_category">
+                                <option value="0">Groceries</option>
+                                <option value="1">Fashion</option>
+                                <option value="2">Electronics</option>
+                            </select>
+                            <label for="icon_prefix">Parent Category</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="add_category" class="modal-action modal-close waves-effect waves-green btn-flat ">add</a>
+        </div>
+    </div>
+    <div id="modal2" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <div class="row">
+                <h5>Edit Category</h5>
+                <form id="editcategoryForm" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="edit_product_id" name="id" type="text" class="validate" disabled>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="edit_product_name" name="product_name" type="text" class="validate">
+                            <label for="icon_prefix">Product Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select id="edit_category" name="category">
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.category_name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="icon_prefix">Category</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <select id="edit_p_status" name="status">
+                                <option value="0">Published</option>
+                                <option value="1">Not Published</option>
+                                <option value="2">Removed</option>
+                                <option value="3">Out of Stock</option>
+                            </select>
+                            <label for="icon_telephone">Status</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="edit_price" type="text" class="validate" name="price">
+                            <label for="icon_prefix">Price</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="edit_category" class="modal-action modal-close waves-effect waves-green btn-flat ">Save</a>
+        </div>
+    </div>
 {% endblock %}

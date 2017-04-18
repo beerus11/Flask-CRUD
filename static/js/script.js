@@ -104,16 +104,20 @@ $(document).ready(function () {
             }
         });
     });
-    $("#add_category").click(function () {
 
-        var json = convertFormToJSON("#productCategory");
+    $("#add_category").click(function () {
+        var json = convertFormToJSON("#categoryForm");
         console.log(json);
         $.ajax({
             type: "POST",
             url: "addCategory",
             data: json,
+            success: function (result) {
+                location.reload();
+            }
         });
-    });
+    })
+
     $("#add_order").click(function () {
         var json = convertFormToJSON("#productOrder");
         console.log(json);
@@ -121,6 +125,9 @@ $(document).ready(function () {
             type: "POST",
             url: "addOrder",
             data: json,
+            success: function (result) {
+                location.reload();
+            }
         });
     });
 
@@ -144,7 +151,7 @@ $(document).ready(function () {
 
     $("#edit_user").click(function () {
         var json = convertFormToJSON("#edituserForm");
-         json["username"] = $("#edit_username").val();
+        json["username"] = $("#edit_username").val();
         console.log(json);
         $.ajax({
             type: "POST",
