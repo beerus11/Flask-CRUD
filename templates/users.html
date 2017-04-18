@@ -17,20 +17,20 @@
         <tbody>
         {% for user in data %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.address }}</td>
-                <td>{{ user.phone }}</td>
-                <td>{% if user.role==1 %}
+                <td id="id">{{ user.id }}</td>
+                <td id="username">{{ user.username }}</td>
+                <td id="email">{{ user.email }}</td>
+                <td id="password">{{ user.password }}</td>
+                <td id="address">{{ user.address }}</td>
+                <td id="phone">{{ user.phone }}</td>
+                <td id="role">{% if user.role==1 %}
                     Admin
                 {% else %}
                     Customer
                 {% endif %}
                 </td>
                 <td style="width: 120px;!important;"><select id="action_user" name="action_user">
-                    <option value="0" data="{{ user.username}}">Edit</option>
+                    <option value="0" data="{{ user.username }}">Edit</option>
                     <option value="1" data="{{ user.username }}">Delete</option>
                 </select>
                 </td>
@@ -43,47 +43,41 @@
     <div id="modal2" class="modal modal-fixed-footer">
         <div class="modal-content">
             <div class="row">
-                <h5>Edit Product</h5>
-                <form id="editproductForm" class="col s12">
+                <h5>Edit User</h5>
+                <form id="edituserForm" class="col s12">
                     <div class="row">
                         <div class="input-field col s6">
-                            <input id="edit_product_id" name="id" type="text" class="validate" disabled>
+                            <input id="edit_username" name="username" type="text" class="validate" disabled>
                         </div>
                         <div class="input-field col s6">
-                            <input id="edit_product_name" name="product_name" type="text" class="validate">
-                            <label for="icon_prefix">Product Name</label>
+                            <input id="edit_email" name="email" type="text" class="validate">
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <select id="edit_category" name="category">
-                                {% for category in categories %}
-                                    <option value="{{ category.id }}">{{ category.category_name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label for="icon_prefix">Category</label>
+                            <input id="edit_password" name="password" type="text" class="validate">
                         </div>
                         <div class="input-field col s6">
-                            <select id="edit_p_status" name="status">
-                                <option value="0">Published</option>
-                                <option value="1">Not Published</option>
-                                <option value="2">Removed</option>
-                                <option value="3">Out of Stock</option>
-                            </select>
-                            <label for="icon_telephone">Status</label>
+                            <input id="edit_phone" name="phone" type="text" class="validate">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input id="edit_price" type="text" class="validate" name="price">
-                            <label for="icon_prefix">Price</label>
+                        <div class="input-field col s6">
+                            <input id="edit_address" name="address" type="text" class="validate">
+                        </div>
+                        <div class="input-field col s6">
+                            <select id="edit_role" name="role">
+                                <option value="1">Admin</option>
+                                <option value="2">Customer</option>
+                            </select>
+                            <label for="edit_role">Role</label>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" id="edit_product" class="modal-action modal-close waves-effect waves-green btn-flat ">Save</a>
+            <a href="#!" id="edit_user" class="modal-action modal-close waves-effect waves-green btn-flat ">Save</a>
         </div>
     </div>
 {% endblock %}

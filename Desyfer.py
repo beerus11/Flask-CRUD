@@ -167,12 +167,12 @@ def editUser():
     print request.form
     if request.method == 'GET':
         return redirect(url_for('users'))
-    user = Users.query.filter_by(username=int(request.args['username'])).first()
-    user.email = request.args['email']
-    user.password = request.args['password']
-    user.address = request.args['address']
-    user.phone = request.args['phone']
-    user.role = request.args['role']
+    user = Users.query.filter_by(username=request.form['username']).first()
+    user.email = request.form['email']
+    user.password = request.form['password']
+    user.address = request.form['address']
+    user.phone = request.form['phone']
+    user.role = request.form['role']
     db.session.commit()
     flash('User Edited')
     return redirect(url_for('users'))
@@ -233,10 +233,10 @@ def addCategory():
 
 @app.route('/delCategory', methods=['POST'])
 def delCategory():
-    print request.args
+    print request.form
     if request.method == 'GET':
         return redirect(url_for('categories'))
-    category = Category.query.filter_by(category_name=int(request.args['category_name'])).first()
+    category = Category.query.filter_by(category_name=int(request.form['category_name'])).first()
     db.session.delete(category)
     db.session.commit()
     flash('Category Deleted !')
@@ -248,8 +248,8 @@ def editCategory():
     print request.form
     if request.method == 'GET':
         return redirect(url_for('categories'))
-    product = Products.query.filter_by(category_name=int(request.args['category_name'])).first()
-    product.parent_category = request.args['parent_category']
+    product = Products.query.filter_by(category_name=int(request.form['category_name'])).first()
+    product.parent_category = request.form['parent_category']
     db.session.commit()
     flash('Category Edited')
     return redirect(url_for('categories'))
@@ -273,12 +273,12 @@ def editOrders():
     print request.form
     if request.method == 'GET':
         return redirect(url_for('orders'))
-    order = Orders.query.filter_by(id=int(request.args['id'])).first()
-    order.customer = request.args['customer']
-    order.product = request.args['product']
-    order.status = request.args['status']
-    order.address = request.args['address']
-    order.price = request.args['price']
+    order = Orders.query.filter_by(id=int(request.form['id'])).first()
+    order.customer = request.form['customer']
+    order.product = request.form['product']
+    order.status = request.form['status']
+    order.address = request.form['address']
+    order.price = request.form['price']
     db.session.commit()
     flash('Product Edited')
     return redirect(url_for('orders'))
@@ -286,10 +286,10 @@ def editOrders():
 
 @app.route('/delOrders', methods=['POST'])
 def delOrders():
-    print request.args
+    print request.form
     if request.method == 'GET':
         return redirect(url_for('orders'))
-    order = Orders.query.filter_by(id=int(request.args['id'])).first()
+    order = Orders.query.filter_by(id=int(request.form['id'])).first()
     db.session.delete(order)
     db.session.commit()
     flash('Order Deleted !')

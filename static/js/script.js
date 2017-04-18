@@ -42,6 +42,26 @@ $(document).ready(function () {
         }
         else if (this.id == "action_user") {
             if (val == 0) {
+                var row = $(this).closest("tr");
+                var id = row.find("td#id").text().trim();
+                var username = row.find("td#username").text().trim();
+                var email = row.find("td#email").text().trim();
+                var password = row.find("td#password").text().trim();
+                var address = row.find("td#address").text().trim();
+                var phone = row.find("td#phone").text().trim();
+                var role = row.find("td#role").text().trim();
+                $('#modal2').modal('open');
+                $("#edit_username").val(username);
+                $("#edit_email").val(email);
+                $("#edit_password").val(password);
+                $("#edit_address").val(address);
+                $("#edit_phone").val(phone);
+                if (role == "Admin") {
+                    $("#edit_role").val('1');
+                } else if (role == "Customer") {
+                    $("#edit_role").val('2');
+                }
+
 
             } else if (val == 1) {
                 console.log("Deleting User");
@@ -113,6 +133,22 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "editProduct",
+            data: json,
+            success: function (result) {
+                location.reload();
+                $('#modal2').modal('close');
+            }
+        });
+
+    });
+
+    $("#edit_user").click(function () {
+        var json = convertFormToJSON("#edituserForm");
+         json["username"] = $("#edit_username").val();
+        console.log(json);
+        $.ajax({
+            type: "POST",
+            url: "editUser",
             data: json,
             success: function (result) {
                 location.reload();
